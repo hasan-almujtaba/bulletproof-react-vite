@@ -2,7 +2,7 @@ const componentLocation = 'src/components/'
 const componentType = {
   layout: 'layouts',
   element: 'elements/{{ name }}',
-  custom: '{{ folder }}/{{ name }}',
+  custom: '{{ folder }}',
 }
 
 /** @type {import('plop').PlopGenerator} */
