@@ -51,7 +51,7 @@ export const componentConfig = {
         {
           type: 'add',
           path: `${componentPath}/{{ name }}.tsx`,
-          templateFile: 'generators/templates/component.hbs',
+          templateFile: 'generators/templates/layout-component.hbs',
         }
       )
     }
