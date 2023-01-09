@@ -1,6 +1,8 @@
-import React, { ElementType, forwardRef } from 'react'
-import { PolymorphicRef } from '~/types'
 import clsx from 'clsx'
+import { ElementType, forwardRef } from 'react'
+
+import { PolymorphicRef } from '~/types'
+
 import { ButtonComponent, ButtonProps } from './type'
 
 export const Button: ButtonComponent = forwardRef(function Button<

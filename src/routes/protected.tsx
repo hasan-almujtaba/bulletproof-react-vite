@@ -1,5 +1,5 @@
-import React from 'react'
 import { RouteObject } from 'react-router-dom'
+
 import { AuthLayout } from '~/components/layouts'
 
 const protectedRoutes: RouteObject[] = [

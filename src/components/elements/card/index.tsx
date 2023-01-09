@@ -1,4 +1,5 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
+
 import { CardProps } from './type'
 
 export const Card = (props: CardProps) => {
