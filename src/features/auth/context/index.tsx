@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import useLocalStorage from '~/hooks/use-local-storage'
+import { useLocalStorage } from '~/hooks'
 
 import { AuthContextValue, AuthData } from './type'
 
