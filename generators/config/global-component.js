@@ -1,3 +1,5 @@
+import { namePrompt, testPrompt } from '../prompt/index.js'
+
 const componentLocation = 'src/components/'
 const componentType = {
   layout: 'layouts',
@@ -6,25 +8,15 @@ const componentType = {
 }
 
 /** @type {import('plop').PlopGenerator} */
-export const componentConfig = {
+export const globalComponentConfig = {
   description: 'Generate new global component',
   prompts: [
-    {
-      type: 'input',
-      name: 'name',
-      message: 'Component name?',
-    },
+    namePrompt,
     {
       type: 'list',
       name: 'type',
       message: 'Component type?',
       choices: ['layout', 'element', 'custom'],
-    },
-    {
-      type: 'confirm',
-      name: 'hasTest',
-      message: 'Generate test file?',
-      when: (data) => data.type !== 'layout',
     },
     {
       type: 'input',
@@ -33,6 +25,7 @@ export const componentConfig = {
       when: (data) => data.type === 'custom',
       default: (data) => data.name,
     },
+    testPrompt,
   ],
   actions: (data) => {
     const componentPath = `${componentLocation + componentType[data.type]}/`
