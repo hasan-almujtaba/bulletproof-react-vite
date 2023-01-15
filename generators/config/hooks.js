@@ -1,4 +1,5 @@
-import { features, featureLocation } from '../utils/index.js'
+import { featureDir, features, hooksDir, templateDir } from '../data/index.js'
+import { hooksPath } from '../utils/index.js'
 
 /** @type {import('plop').PlopGenerator} */
 export const hooksConfig = {
@@ -11,7 +12,7 @@ export const hooksConfig = {
     },
     {
       type: 'list',
-      name: 'type',
+      name: 'feature',
       message: 'Which feature?',
       choices: ['global', ...features, 'new feature'],
     },
@@ -19,7 +20,7 @@ export const hooksConfig = {
       type: 'input',
       name: 'newFeature',
       message: 'Feature name?',
-      when: (data) => data.type === 'new feature',
+      when: (data) => data.feature === 'new feature',
     },
     {
       type: 'confirm',
@@ -29,51 +30,45 @@ export const hooksConfig = {
   ],
   actions: (data) => {
     /** @type {import('plop').PlopGeneratorConfig['actions']} */
-    const actions = []
+    const actions = [
+      {
+        type: 'add',
+        path: hooksPath(data),
+        templateFile: `${templateDir}/hooks.hbs`,
+      },
+    ]
 
-    if (data.type === 'global') {
-      actions.push(
-        {
-          type: 'add',
-          path: 'src/hooks/use-{{ kebabCase name }}.ts',
-          templateFile: 'generators/templates/hooks.hbs',
-        },
-        {
-          type: 'modify',
-          path: 'src/hooks/index.ts',
-          pattern: /(\/\/ HOOKS EXPORTS)/g,
-          templateFile: 'generators/templates/hooks-entry.hbs',
-        }
-      )
+    if (data.feature === 'global') {
+      actions.push({
+        type: 'modify',
+        path: `${hooksDir}/index.ts`,
+        pattern: /(\/\/ HOOKS EXPORTS)/g,
+        templateFile: `${templateDir}/hooks-entry.hbs`,
+      })
     }
 
     if (data.newFeature) {
       actions.push({
         type: 'add',
-        path: `${featureLocation}/{{ kebabCase newFeature }}/hooks/index.ts`,
-        templateFile: 'generators/templates/hooks-entry.hbs',
+        path: `${featureDir}/{{ kebabCase newFeature }}/hooks/index.ts`,
+        templateFile: `${templateDir}hooks-entry.hbs`,
       })
     }
 
-    const hooksType = data.newFeature ? 'newFeature' : 'type'
-    if (data.type !== 'global') {
+    if (!data.newFeature && data.feature !== 'global') {
       actions.push({
-        type: 'add',
-        path: `${featureLocation}/{{ kebabCase ${hooksType} }}/hooks/use-{{ kebabCase name }}.ts`,
-        templateFile: 'generators/templates/hooks.hbs',
+        type: 'modify',
+        path: `${featureDir}/{{ feature }}/hooks/index.ts`,
+        pattern: /(\/\/ HOOKS EXPORTS)/g,
+        templateFile: `${templateDir}/hooks-entry.hbs`,
       })
     }
-
-    const testPath =
-      data.type === 'global'
-        ? 'src/hooks/test/use-{{ kebabCase name }}.test.ts'
-        : `${featureLocation}/{{ kebabCase ${hooksType} }}/hooks/test/use-{{ kebabCase name }}.ts`
 
     if (data.hasTest) {
       actions.push({
         type: 'add',
-        path: testPath,
-        templateFile: 'generators/templates/hooks-test.hbs',
+        path: hooksPath(data, 'test'),
+        templateFile: `${templateDir}/hooks-test.hbs`,
       })
     }
 

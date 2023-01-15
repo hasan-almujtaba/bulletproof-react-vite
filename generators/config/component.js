@@ -1,5 +1,10 @@
-import { componentDir, featureDir, templateDir } from '../data/index.js'
-import { componentTemplate, features, componentPath } from '../utils/index.js'
+import {
+  componentDir,
+  featureDir,
+  features,
+  templateDir,
+} from '../data/index.js'
+import { componentTemplate, componentPath } from '../utils/index.js'
 
 /** @type {import('plop').PlopGenerator} */
 export const componentConfig = {
