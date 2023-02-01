@@ -30,7 +30,7 @@ export const componentConfig = {
     {
       type: 'list',
       name: 'folder',
-      message: 'Component folder location? (Optional)',
+      message: 'Component folder location?',
       choices: (data) => ['layouts', 'elements', data.name, 'new folder'],
       when: (data) => data.feature === 'global',
       default: (data) => data.name,
@@ -45,7 +45,7 @@ export const componentConfig = {
       type: 'confirm',
       name: 'hasTest',
       message: 'Generate test file?',
-      when: (data) => data.folder !== 'layout',
+      when: (data) => data.folder !== 'layouts',
     },
   ],
   actions: (data) => {
